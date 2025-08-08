@@ -1,23 +1,45 @@
-
--- Draggable Hello World GUI with Close Button (Delta Executor Safe)
-
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local UserInputService = game:GetService("UserInputService")
 
--- Create main GUI
+-- ====== File system and download setup ======
+
+if not isfolder("GagHub") then
+    makefolder("GagHub")
+end
+if not isfolder("GagHub/Assets") then
+    makefolder("GagHub/Assets")
+end
+
+local imageUrl = "https://raw.githubusercontent.com/klvnco/gag-scr/main/klvn-slvr.png"
+local imagePath = "GagHub/Assets/klvn-slvr.png"
+
+if not isfile(imagePath) then
+    local req = (syn and syn.request or http and http.request or request)({
+        Url = imageUrl,
+        Method = "GET"
+    })
+    if req and req.StatusCode == 200 then
+        writefile(imagePath, req.Body)
+        print("✅ Image downloaded:", imagePath)
+    else
+        warn("❌ Failed to download image")
+    end
+end
+
+-- ====== Create GUI ======
+
 local gui = Instance.new("ScreenGui")
 gui.Name = "HelloWorldOverlay"
 gui.ResetOnSpawn = false
 gui.IgnoreGuiInset = true
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 
--- Parent to CoreGui / gethui (executor-safe)
 pcall(function()
-	gui.Parent = gethui and gethui() or (syn and syn.protect_gui and syn.protect_gui(gui)) or game:GetService("CoreGui")
+    gui.Parent = gethui and gethui() or (syn and syn.protect_gui and syn.protect_gui(gui)) or game:GetService("CoreGui")
 end)
 
--- Window frame
+-- Main window frame
 local main = Instance.new("Frame")
 main.Size = UDim2.new(0, 300, 0, 160)
 main.Position = UDim2.new(0.5, -150, 0.5, -80)
@@ -25,11 +47,10 @@ main.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 main.BorderSizePixel = 0
 main.Parent = gui
 
--- Round corners
 local corner = Instance.new("UICorner", main)
 corner.CornerRadius = UDim.new(0, 8)
 
--- Title bar (drag area)
+-- Title bar
 local title = Instance.new("TextLabel")
 title.Size = UDim2.new(1, 0, 0, 30)
 title.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
@@ -58,10 +79,24 @@ local closeCorner = Instance.new("UICorner", close)
 closeCorner.CornerRadius = UDim.new(0, 4)
 
 close.MouseButton1Click:Connect(function()
-	gui:Destroy()
+    gui:Destroy()
 end)
 
--- Content (Hello World)
+-- Minimize button
+local minimize = Instance.new("TextButton")
+minimize.Size = UDim2.new(0, 24, 0, 24)
+minimize.Position = UDim2.new(1, -56, 0, 3)
+minimize.Text = "─"
+minimize.BackgroundColor3 = Color3.fromRGB(80, 80, 200)
+minimize.TextColor3 = Color3.fromRGB(255, 255, 255)
+minimize.Font = Enum.Font.GothamBold
+minimize.TextSize = 16
+minimize.Parent = title
+
+local minimizeCorner = Instance.new("UICorner", minimize)
+minimizeCorner.CornerRadius = UDim.new(0, 4)
+
+-- Content label
 local content = Instance.new("TextLabel")
 content.Size = UDim2.new(1, -20, 1, -50)
 content.Position = UDim2.new(0, 10, 0, 40)
@@ -72,26 +107,76 @@ content.TextScaled = true
 content.Font = Enum.Font.Gotham
 content.Parent = main
 
--- Make window draggable (custom method)
-local dragging, dragInput, dragStart, startPos
+-- Restore icon (starts hidden)
+local restoreIcon = Instance.new("ImageButton")
+restoreIcon.Size = UDim2.new(0, 40, 0, 40)
+restoreIcon.Position = UDim2.new(0, 10, 1, -50)
+restoreIcon.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+restoreIcon.Image = getcustomasset(imagePath)
+restoreIcon.Visible = false
+restoreIcon.Parent = gui
+
+local restoreCorner = Instance.new("UICorner", restoreIcon)
+restoreCorner.CornerRadius = UDim.new(1, 0)
+
+-- Dragging variables for main window
+local dragging, dragStart, startPos
 
 title.InputBegan:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 then
-		dragging = true
-		dragStart = input.Position
-		startPos = main.Position
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = main.Position
 
-		input.Changed:Connect(function()
-			if input.UserInputState == Enum.UserInputState.End then
-				dragging = false
-			end
-		end)
-	end
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
 end)
 
 UserInputService.InputChanged:Connect(function(input)
-	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-		local delta = input.Position - dragStart
-		main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-	end
+    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local delta = input.Position - dragStart
+        main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+                                  startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+-- Dragging variables for restore icon
+local draggingIcon, iconDragStart, iconStartPos
+
+restoreIcon.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        draggingIcon = true
+        iconDragStart = input.Position
+        iconStartPos = restoreIcon.Position
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                draggingIcon = false
+            end
+        end)
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if draggingIcon and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local delta = input.Position - iconDragStart
+        restoreIcon.Position = UDim2.new(iconStartPos.X.Scale, iconStartPos.X.Offset + delta.X,
+                                         iconStartPos.Y.Scale, iconStartPos.Y.Offset + delta.Y)
+    end
+end)
+
+-- Minimize button functionality
+minimize.MouseButton1Click:Connect(function()
+    main.Visible = false
+    restoreIcon.Visible = true
+end)
+
+-- Restore icon functionality
+restoreIcon.MouseButton1Click:Connect(function()
+    main.Visible = true
+    restoreIcon.Visible = false
 end)
