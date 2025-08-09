@@ -240,7 +240,7 @@ local function showMenu3()
     -- Helper function to create label (modified for inline)
     local function createLabel(text, widthPercent)
         local lbl = Instance.new("TextLabel")
-        lbl.Size = UDim2.new(widthPercent or 0.2, -5, 0, 30)  -- Default to 30% width with 5px margin
+        lbl.Size = UDim2.new(0.2, -5, 0, 35)  -- Default to 30% width with 5px margin
         lbl.BackgroundTransparency = 1
         lbl.Text = text
         lbl.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -253,7 +253,7 @@ local function showMenu3()
     -- Helper function to create dropdown (modified for inline)
     local function createDropdown(widthPercent)
         local dropdown = Instance.new("TextButton")
-        dropdown.Size = UDim2.new(widthPercent or 0.7, -5, 0, 30)  -- Default to 70% width with 5px margin
+        dropdown.Size = UDim2.new(0.7, -5, 0, 35)  -- Default to 70% width with 5px margin
         dropdown.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
         dropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
         dropdown.Font = Enum.Font.Gotham
