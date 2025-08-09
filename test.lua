@@ -303,10 +303,22 @@ menu3.MouseButton1Click:Connect(function()
     row3.LayoutOrder = 3
     row3.Parent = rightPanel
 
+    --local btnReLogin = createButton("Re-login", 1)
+    --btnReLogin.Position = UDim2.new(0, 0, 0, 0)
+    --btnReLogin.Parent = row3
+-- Add this where you create buttons inside Menu 3, for example inside your layout setup:
+
+    local TeleportService = game:GetService("TeleportService")
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+    
     local btnReLogin = createButton("Re-login", 1)
     btnReLogin.Position = UDim2.new(0, 0, 0, 0)
-    btnReLogin.Parent = row3
-
+    btnReLogin.Parent = row3    
+    btnReLogin.MouseButton1Click:Connect(function()
+        TeleportService:Teleport(game.PlaceId, player)
+    end)
+        
     local btnClearList = createButton("Clear list", 2)
     btnClearList.Position = UDim2.new(0.52, 0, 0, 0)  -- small gap between buttons
     btnClearList.Parent = row3
