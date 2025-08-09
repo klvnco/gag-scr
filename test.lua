@@ -32,7 +32,7 @@ end
 
 -- ====== Create GUI ======
 local gui = Instance.new("ScreenGui")
-gui.Name = "  kid v1.1"
+gui.Name = "  kid v1.0"
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 gui.ResetOnSpawn = false
 gui.IgnoreGuiInset = true
@@ -57,7 +57,7 @@ corner.CornerRadius = UDim.new(0, 8)
 local title = Instance.new("TextLabel")
 title.Size = UDim2.new(1, 0, 0, 30)
 title.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-title.Text = "  kid v1.0"
+title.Text = gui.Name
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.GothamSemibold
 title.TextSize = 14
@@ -117,7 +117,6 @@ leftPanel.Size = UDim2.new(0.25, 0, 1, -30)
 leftPanel.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 leftPanel.BorderSizePixel = 0
 leftPanel.Position = UDim2.new(0, 0, 0, 30)  -- <-- add this line to move down by 30 px
-leftPanel.Size = UDim2.new(0.3, 0, 1, -30)    -- <-- reduce height by 30 px
 leftPanel.Parent = main
 
 
