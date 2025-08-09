@@ -112,9 +112,8 @@ local restoreCorner = Instance.new("UICorner", restoreIcon)
 restoreCorner.CornerRadius = UDim.new(1, 0)
 
 -- Left panel for menu (30% width)
--- Left panel for menu (30% width)
 local leftPanel = Instance.new("Frame")
-leftPanel.Size = UDim2.new(0.3, 0, 1, 0)
+leftPanel.Size = UDim2.new(0.3, 0, 1, -30)
 leftPanel.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 leftPanel.BorderSizePixel = 0
 leftPanel.Position = UDim2.new(0, 0, 0, 30)  -- <-- add this line to move down by 30 px
