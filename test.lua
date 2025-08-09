@@ -68,9 +68,9 @@ titleCorner.CornerRadius = UDim.new(0, 8)
 
 -- Close button
 local close = Instance.new("TextButton")
-close.Size = UDim2.new(0, 24, 0, 24)
+close.Size = UDim2.new(0, 20, 0, 20)
 close.Position = UDim2.new(1, -28, 0, 3)
-close.Text = "✕"
+close.Text = "x"
 close.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
 close.TextColor3 = Color3.fromRGB(255, 255, 255)
 close.Font = Enum.Font.GothamBold
@@ -86,9 +86,9 @@ end)
 
 -- Minimize button
 local minimize = Instance.new("TextButton")
-minimize.Size = UDim2.new(0, 24, 0, 24)
+minimize.Size = UDim2.new(0, 20, 0, 20)
 minimize.Position = UDim2.new(1, -56, 0, 3)
-minimize.Text = "─"
+minimize.Text = "-"
 minimize.BackgroundColor3 = Color3.fromRGB(80, 80, 200)
 minimize.TextColor3 = Color3.fromRGB(255, 255, 255)
 minimize.Font = Enum.Font.GothamBold
