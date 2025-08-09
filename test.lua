@@ -136,8 +136,8 @@ leftCorner.CornerRadius = UDim.new(0, 8)
 
 -- Right panel for content (70% width)
 local rightPanel = Instance.new("Frame")
-rightPanel.Size = UDim2.new(0.70, 0, 1, -30)  -- reduce height by 30 px
-rightPanel.Position = UDim2.new(0.3, 0, 0, 30) -- move down by 30 px
+rightPanel.Size = UDim2.new(0.70, 0, 1, -35)  -- reduce height by 35 px
+rightPanel.Position = UDim2.new(0.3, 0, 0, 35) -- move down by 35 px
 rightPanel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 rightPanel.BorderSizePixel = 0
 rightPanel.Parent = main
