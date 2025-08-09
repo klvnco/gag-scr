@@ -112,22 +112,27 @@ local restoreCorner = Instance.new("UICorner", restoreIcon)
 restoreCorner.CornerRadius = UDim.new(1, 0)
 
 -- Left panel for menu (30% width)
+-- Left panel for menu (30% width)
 local leftPanel = Instance.new("Frame")
 leftPanel.Size = UDim2.new(0.3, 0, 1, 0)
 leftPanel.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 leftPanel.BorderSizePixel = 0
+leftPanel.Position = UDim2.new(0, 0, 0, 30)  -- <-- add this line to move down by 30 px
+leftPanel.Size = UDim2.new(0.3, 0, 1, -30)    -- <-- reduce height by 30 px
 leftPanel.Parent = main
+
 
 local leftCorner = Instance.new("UICorner", leftPanel)
 leftCorner.CornerRadius = UDim.new(0, 8)
 
 -- Right panel for content (70% width)
 local rightPanel = Instance.new("Frame")
-rightPanel.Size = UDim2.new(0.7, 0, 1, 0)
-rightPanel.Position = UDim2.new(0.3, 0, 0, 0)
+rightPanel.Size = UDim2.new(0.7, 0, 1, -30)  -- reduce height by 30 px
+rightPanel.Position = UDim2.new(0.3, 0, 0, 30) -- move down by 30 px
 rightPanel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 rightPanel.BorderSizePixel = 0
 rightPanel.Parent = main
+
 
 local rightCorner = Instance.new("UICorner", rightPanel)
 rightCorner.CornerRadius = UDim.new(0, 8)
