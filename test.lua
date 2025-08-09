@@ -176,8 +176,8 @@ end
 
 -- Create 3 menu buttons
 local menu1 = createMenuButton("Menu 1", 10)
-local menu2 = createMenuButton("Menu 2", 60)
-local menu3 = createMenuButton("Menu 3", 110)
+local menu2 = createMenuButton("Menu 2", 40)
+local menu3 = createMenuButton("Menu 3", 70)
 
 -- Button click events to update right panel content
 menu1.MouseButton1Click:Connect(function()
