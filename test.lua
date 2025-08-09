@@ -240,12 +240,12 @@ local function showMenu3()
     -- Helper function to create label (modified for inline)
     local function createLabel(text, widthPercent)
         local lbl = Instance.new("TextLabel")
-        lbl.Size = UDim2.new(widthPercent or 0.3, -5, 0, 30)  -- Default to 30% width with 5px margin
+        lbl.Size = UDim2.new(widthPercent or 0.2, -5, 0, 30)  -- Default to 30% width with 5px margin
         lbl.BackgroundTransparency = 1
         lbl.Text = text
         lbl.TextColor3 = Color3.fromRGB(255, 255, 255)
         lbl.Font = Enum.Font.GothamSemibold
-        lbl.TextSize = 12
+        lbl.TextSize = 10
         lbl.TextXAlignment = Enum.TextXAlignment.Left
         return lbl
     end
@@ -257,7 +257,7 @@ local function showMenu3()
         dropdown.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
         dropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
         dropdown.Font = Enum.Font.Gotham
-        dropdown.TextSize = 12
+        dropdown.TextSize = 10
         dropdown.Text = "Select an option ▼"
         dropdown.AutoButtonColor = true
 
@@ -287,7 +287,7 @@ local function showMenu3()
     row1Layout.Padding = UDim.new(0, 10)  -- Space between label and dropdown
     row1Layout.Parent = row1
 
-    local row1Label = createLabel("Choose option:", 0.3)
+    local row1Label = createLabel("Choose option:", 0.2)
     row1Label.Parent = row1
 
     local row1Dropdown = createDropdown(0.7)
@@ -303,7 +303,7 @@ local function showMenu3()
     row2Layout.Padding = UDim.new(0, 10)
     row2Layout.Parent = row2
 
-    local row2Label = createLabel("Enter text:", 0.3)
+    local row2Label = createLabel("Enter text:", 0.2)
     row2Label.Parent = row2
 
     local row2TextBox = Instance.new("TextBox")
