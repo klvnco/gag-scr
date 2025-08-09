@@ -32,7 +32,7 @@ end
 
 -- ====== Create GUI ======
 local gui = Instance.new("ScreenGui")
-gui.Name = "kid"
+gui.Name = " kid"
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 gui.ResetOnSpawn = false
 gui.IgnoreGuiInset = true
@@ -156,7 +156,7 @@ local function createMenuButton(text, posY)
     btn.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
     btn.TextColor3 = Color3.fromRGB(255, 255, 255)
     btn.Font = Enum.Font.GothamSemibold
-    btn.TextSize = 16
+    btn.TextSize = 12
     btn.Text = text
     btn.Parent = leftPanel
 
