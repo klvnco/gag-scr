@@ -32,7 +32,7 @@ end
 
 -- ====== Create GUI ======
 local gui = Instance.new("ScreenGui")
-gui.Name = "      kid v1.1"
+gui.Name = "  kid v1.1"
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 gui.ResetOnSpawn = false
 gui.IgnoreGuiInset = true
