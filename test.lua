@@ -44,7 +44,7 @@ end)
 
 -- Main window frame
 local main = Instance.new("Frame")
-main.Size = UDim2.new(0, 300, 0, 300)
+main.Size = UDim2.new(0, 250, 0, 400)
 main.Position = UDim2.new(0.5, -150, 0.5, -150)
 main.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 main.BorderSizePixel = 0
