@@ -43,7 +43,7 @@ end)
 
 -- Main window frame
 local main = Instance.new("Frame")
-main.Size = UDim2.new(0, 300, 0, 160)
+main.Size = UDim2.new(0, 300, 0, 300)
 main.Position = UDim2.new(0.5, -150, 0.5, -80)
 main.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 main.BorderSizePixel = 0
@@ -56,7 +56,7 @@ corner.CornerRadius = UDim.new(0, 8)
 local title = Instance.new("TextLabel")
 title.Size = UDim2.new(1, 0, 0, 30)
 title.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-title.Text = " Hello Window"
+title.Text = "kid"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.GothamSemibold
 title.TextSize = 16
