@@ -192,29 +192,134 @@ end)
 --    rightContent.Text = "Options for Menu 3:\n- Feature X\n- Feature Y\n- Feature Z"
 --end)
 menu3.MouseButton1Click:Connect(function()
-    -- Clear existing content in right panel first:
+    -- Clear existing content
     for _, child in pairs(rightPanel:GetChildren()) do
-        if not child:IsA("UIListLayout") then  -- just in case you add layouts later
+        if not child:IsA("UIListLayout") then
             child:Destroy()
         end
     end
 
-    -- Create a button inside the right panel
-    local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(0, 150, 0, 40)
-    btn.Position = UDim2.new(0, 10, 0, 10)
-    btn.BackgroundColor3 = Color3.fromRGB(70, 70, 200)
-    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    btn.Font = Enum.Font.GothamSemibold
-    btn.TextSize = 16
-    btn.Text = "Right Panel Button"
-    btn.Parent = rightPanel
+    -- Add a UIListLayout to arrange rows vertically
+    local listLayout = Instance.new("UIListLayout")
+    listLayout.Padding = UDim.new(0, 10)  -- spacing between rows
+    listLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    listLayout.Parent = rightPanel
 
-    btn.MouseButton1Click:Connect(function()
-        print("Right Panel Button clicked!")
-        -- Add button action here
+    -- Helper function to create label
+    local function createLabel(text)
+        local lbl = Instance.new("TextLabel")
+        lbl.Size = UDim2.new(1, -20, 0, 25)
+        lbl.BackgroundTransparency = 1
+        lbl.Text = text
+        lbl.TextColor3 = Color3.fromRGB(255, 255, 255)
+        lbl.Font = Enum.Font.GothamSemibold
+        lbl.TextSize = 14
+        lbl.TextXAlignment = Enum.TextXAlignment.Left
+        lbl.LayoutOrder = 1
+        return lbl
+    end
+
+    -- Helper function to create dropdown (simple simulated)
+    local function createDropdown()
+        local dropdown = Instance.new("TextButton")
+        dropdown.Size = UDim2.new(1, -20, 0, 30)
+        dropdown.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+        dropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
+        dropdown.Font = Enum.Font.Gotham
+        dropdown.TextSize = 14
+        dropdown.Text = "Select an option ▼"
+        dropdown.LayoutOrder = 2
+        dropdown.AutoButtonColor = true
+
+        -- You can add real dropdown logic here later
+        dropdown.MouseButton1Click:Connect(function()
+            print("Dropdown clicked!")
+        end)
+
+        return dropdown
+    end
+
+    -- Helper function to create TextBox
+    local function createTextBox()
+        local tb = Instance.new("TextBox")
+        tb.Size = UDim2.new(1, -20, 0, 30)
+        tb.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+        tb.TextColor3 = Color3.fromRGB(255, 255, 255)
+        tb.Font = Enum.Font.Gotham
+        tb.TextSize = 14
+        tb.ClearTextOnFocus = false
+        tb.PlaceholderText = "Enter text here"
+        tb.LayoutOrder = 4
+        return tb
+    end
+
+    -- Helper function to create button
+    local function createButton(text, layoutOrder)
+        local btn = Instance.new("TextButton")
+        btn.Size = UDim2.new(0.48, 0, 0, 30)
+        btn.BackgroundColor3 = Color3.fromRGB(70, 70, 200)
+        btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+        btn.Font = Enum.Font.GothamSemibold
+        btn.TextSize = 14
+        btn.Text = text
+        btn.LayoutOrder = layoutOrder
+        return btn
+    end
+
+    -- Row 1: Label + Dropdown
+    local row1 = Instance.new("Frame")
+    row1.Size = UDim2.new(1, 0, 0, 60)
+    row1.BackgroundTransparency = 1
+    row1.LayoutOrder = 1
+    row1.Parent = rightPanel
+
+    local row1Label = createLabel("Choose option:")
+    row1Label.Position = UDim2.new(0, 0, 0, 0)
+    row1Label.Parent = row1
+
+    local row1Dropdown = createDropdown()
+    row1Dropdown.Position = UDim2.new(0, 0, 0, 30)
+    row1Dropdown.Parent = row1
+
+    -- Row 2: Label + TextBox
+    local row2 = Instance.new("Frame")
+    row2.Size = UDim2.new(1, 0, 0, 60)
+    row2.BackgroundTransparency = 1
+    row2.LayoutOrder = 2
+    row2.Parent = rightPanel
+
+    local row2Label = createLabel("Enter text:")
+    row2Label.Position = UDim2.new(0, 0, 0, 0)
+    row2Label.Parent = row2
+
+    local row2TextBox = createTextBox()
+    row2TextBox.Position = UDim2.new(0, 0, 0, 30)
+    row2TextBox.Parent = row2
+
+    -- Row 3: Two buttons side by side
+    local row3 = Instance.new("Frame")
+    row3.Size = UDim2.new(1, 0, 0, 40)
+    row3.BackgroundTransparency = 1
+    row3.LayoutOrder = 3
+    row3.Parent = rightPanel
+
+    local btnReLogin = createButton("Re-login", 1)
+    btnReLogin.Position = UDim2.new(0, 0, 0, 0)
+    btnReLogin.Parent = row3
+
+    local btnClearList = createButton("Clear list", 2)
+    btnClearList.Position = UDim2.new(0.52, 0, 0, 0)  -- small gap between buttons
+    btnClearList.Parent = row3
+
+    -- Example button events
+    btnReLogin.MouseButton1Click:Connect(function()
+        print("Re-login clicked")
+    end)
+    btnClearList.MouseButton1Click:Connect(function()
+        print("Clear list clicked")
     end)
 end)
+
 
 -- Dragging variables for main window
 local dragging, dragStart, startPos
