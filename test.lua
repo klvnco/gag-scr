@@ -6,7 +6,7 @@ local TweenService = game:GetService("TweenService")
 local HttpService = game:GetService("HttpService")
 
 local player = Players.LocalPlayer
-local version = "  kid v1.1"
+local version = "  kid v1.2"
 
 
 -- ====== File system and download setup ======
