@@ -74,7 +74,7 @@ local close = Instance.new("TextButton")
 close.Size = UDim2.new(0, 20, 0, 20)
 close.Position = UDim2.new(1, -28, 0, 5)
 close.Text = "x"
-close.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+--close.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
 close.TextColor3 = Color3.fromRGB(255, 255, 255)
 close.Font = Enum.Font.GothamBold
 close.TextSize = 14
@@ -92,7 +92,7 @@ local minimize = Instance.new("TextButton")
 minimize.Size = UDim2.new(0, 20, 0, 20)
 minimize.Position = UDim2.new(1, -56, 0, 5)
 minimize.Text = "-"
-minimize.BackgroundColor3 = Color3.fromRGB(80, 80, 200)
+--minimize.BackgroundColor3 = Color3.fromRGB(80, 80, 200)
 minimize.TextColor3 = Color3.fromRGB(255, 255, 255)
 minimize.Font = Enum.Font.GothamBold
 minimize.TextSize = 14
@@ -237,33 +237,30 @@ local function showMenu3()
     listLayout.SortOrder = Enum.SortOrder.LayoutOrder
     listLayout.Parent = rightPanel
 
-    -- Helper function to create label
-    local function createLabel(text)
+    -- Helper function to create label (modified for inline)
+    local function createLabel(text, widthPercent)
         local lbl = Instance.new("TextLabel")
-        lbl.Size = UDim2.new(1, -20, 0, 25)
+        lbl.Size = UDim2.new(widthPercent or 0.3, -5, 0, 30)  -- Default to 30% width with 5px margin
         lbl.BackgroundTransparency = 1
         lbl.Text = text
         lbl.TextColor3 = Color3.fromRGB(255, 255, 255)
         lbl.Font = Enum.Font.GothamSemibold
-        lbl.TextSize = 10
+        lbl.TextSize = 12
         lbl.TextXAlignment = Enum.TextXAlignment.Left
-        lbl.LayoutOrder = 1
         return lbl
     end
 
-    -- Helper function to create dropdown (simple simulated)
-    local function createDropdown()
+    -- Helper function to create dropdown (modified for inline)
+    local function createDropdown(widthPercent)
         local dropdown = Instance.new("TextButton")
-        dropdown.Size = UDim2.new(1, -20, 0, 30)
+        dropdown.Size = UDim2.new(widthPercent or 0.7, -5, 0, 30)  -- Default to 70% width with 5px margin
         dropdown.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
         dropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
         dropdown.Font = Enum.Font.Gotham
-        dropdown.TextSize = 10
+        dropdown.TextSize = 12
         dropdown.Text = "Select an option ▼"
-        dropdown.LayoutOrder = 2
         dropdown.AutoButtonColor = true
 
-        -- You can add real dropdown logic here later
         dropdown.MouseButton1Click:Connect(function()
             print("Dropdown clicked!")
         end)
@@ -271,93 +268,82 @@ local function showMenu3()
         return dropdown
     end
 
-    -- Helper function to create TextBox
-    local function createTextBox()
-        local tb = Instance.new("TextBox")
-        tb.Size = UDim2.new(1, -20, 0, 30)
-        tb.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-        tb.TextColor3 = Color3.fromRGB(255, 255, 255)
-        tb.Font = Enum.Font.Gotham
-        tb.TextSize = 14
-        tb.ClearTextOnFocus = false
-        tb.PlaceholderText = "Enter text here"
-        tb.LayoutOrder = 4
-        return tb
+    -- Helper function to create row container
+    local function createRow(height)
+        local row = Instance.new("Frame")
+        row.Size = UDim2.new(1, -10, 0, height or 40)  -- 10px side padding
+        row.BackgroundTransparency = 1
+        return row
     end
 
-    -- Helper function to create button
-    local function createButton(text, layoutOrder)
-        local btn = Instance.new("TextButton")
-        btn.Size = UDim2.new(0.48, 0, 0, 15)
-        btn.BackgroundColor3 = Color3.fromRGB(70, 70, 200)
-        btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-        btn.Font = Enum.Font.GothamSemibold
-        btn.TextSize = 10
-        btn.Text = text
-        btn.LayoutOrder = layoutOrder
-        return btn
-    end
-
-    -- Row 1: Label + Dropdown
-    local row1 = Instance.new("Frame")
-    row1.Size = UDim2.new(1, 0, 0, 60)
-    row1.BackgroundTransparency = 1
+    -- Row 1: Label + Dropdown in same row
+    local row1 = createRow(40)
     row1.LayoutOrder = 1
     row1.Parent = rightPanel
 
-    local row1Label = createLabel("Choose option:")
-    row1Label.Position = UDim2.new(0, 0, 0, 0)
+    -- Add horizontal layout for this row
+    local row1Layout = Instance.new("UIListLayout")
+    row1Layout.FillDirection = Enum.FillDirection.Horizontal
+    row1Layout.Padding = UDim.new(0, 10)  -- Space between label and dropdown
+    row1Layout.Parent = row1
+
+    local row1Label = createLabel("Choose option:", 0.3)
     row1Label.Parent = row1
 
-    local row1Dropdown = createDropdown()
-    row1Dropdown.Position = UDim2.new(0, 0, 0, 30)
+    local row1Dropdown = createDropdown(0.7)
     row1Dropdown.Parent = row1
 
-    -- Row 2: Label + TextBox
-    local row2 = Instance.new("Frame")
-    row2.Size = UDim2.new(1, 0, 0, 60)
-    row2.BackgroundTransparency = 1
+    -- Row 2: Label + TextBox in same row
+    local row2 = createRow(40)
     row2.LayoutOrder = 2
     row2.Parent = rightPanel
 
-    local row2Label = createLabel("Enter text:")
-    row2Label.Position = UDim2.new(0, 0, 0, 0)
+    local row2Layout = Instance.new("UIListLayout")
+    row2Layout.FillDirection = Enum.FillDirection.Horizontal
+    row2Layout.Padding = UDim.new(0, 10)
+    row2Layout.Parent = row2
+
+    local row2Label = createLabel("Enter text:", 0.3)
     row2Label.Parent = row2
 
-    local row2TextBox = createTextBox()
-    row2TextBox.Position = UDim2.new(0, 0, 0, 30)
+    local row2TextBox = Instance.new("TextBox")
+    row2TextBox.Size = UDim2.new(0.7, -5, 0, 30)
+    row2TextBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    row2TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    row2TextBox.Font = Enum.Font.Gotham
+    row2TextBox.TextSize = 14
+    row2TextBox.ClearTextOnFocus = false
+    row2TextBox.PlaceholderText = "Enter text here"
     row2TextBox.Parent = row2
 
-    -- Row 3: Two buttons side by side
-    local row3 = Instance.new("Frame")
-    row3.Size = UDim2.new(1, 0, 0, 40)
-    row3.BackgroundTransparency = 1
+    -- Row 3: Buttons (unchanged)
+    local row3 = createRow(40)
     row3.LayoutOrder = 3
     row3.Parent = rightPanel
 
-    --local btnReLogin = createButton("Re-login", 1)
-    --btnReLogin.Position = UDim2.new(0, 0, 0, 0)
-    --btnReLogin.Parent = row3
-    -- Add this where you create buttons inside Menu 3, for example inside your layout setup:
-
-    local TeleportService = game:GetService("TeleportService")
-    local Players = game:GetService("Players")
-    local player = Players.LocalPlayer
-    
-    local btnReLogin = createButton("Re-login", 1)
+    local btnReLogin = Instance.new("TextButton")
+    btnReLogin.Size = UDim2.new(0.48, 0, 0, 30)
+    btnReLogin.BackgroundColor3 = Color3.fromRGB(70, 70, 200)
+    btnReLogin.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btnReLogin.Font = Enum.Font.GothamSemibold
+    btnReLogin.TextSize = 12
+    btnReLogin.Text = "Re-login"
     btnReLogin.Position = UDim2.new(0, 0, 0, 0)
-    btnReLogin.Parent = row3    
-    btnReLogin.MouseButton1Click:Connect(function()
-        TeleportService:Teleport(game.PlaceId, player)
-    end)
-        
-    local btnClearList = createButton("Clear list", 2)
-    btnClearList.Position = UDim2.new(0.52, 0, 0, 0)  -- small gap between buttons
+    btnReLogin.Parent = row3
+
+    local btnClearList = Instance.new("TextButton")
+    btnClearList.Size = UDim2.new(0.48, 0, 0, 30)
+    btnClearList.BackgroundColor3 = Color3.fromRGB(70, 70, 200)
+    btnClearList.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btnClearList.Font = Enum.Font.GothamSemibold
+    btnClearList.TextSize = 12
+    btnClearList.Text = "Clear list"
+    btnClearList.Position = UDim2.new(0.52, 0, 0, 0)
     btnClearList.Parent = row3
 
-    -- Example button events
+    -- Button functionality
     btnReLogin.MouseButton1Click:Connect(function()
-        print("Re-login clicked")
+        game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
     end)
     btnClearList.MouseButton1Click:Connect(function()
         print("Clear list clicked")
