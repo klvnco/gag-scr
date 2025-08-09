@@ -59,7 +59,7 @@ title.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 title.Text = "kid"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.GothamSemibold
-title.TextSize = 16
+title.TextSize = 14
 title.TextXAlignment = Enum.TextXAlignment.Left
 title.Parent = main
 
@@ -74,7 +74,7 @@ close.Text = "x"
 close.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
 close.TextColor3 = Color3.fromRGB(255, 255, 255)
 close.Font = Enum.Font.GothamBold
-close.TextSize = 16
+close.TextSize = 14
 close.Parent = title
 
 local closeCorner = Instance.new("UICorner", close)
@@ -92,11 +92,11 @@ minimize.Text = "-"
 minimize.BackgroundColor3 = Color3.fromRGB(80, 80, 200)
 minimize.TextColor3 = Color3.fromRGB(255, 255, 255)
 minimize.Font = Enum.Font.GothamBold
-minimize.TextSize = 16
+minimize.TextSize = 14
 minimize.Parent = title
 
 local minimizeCorner = Instance.new("UICorner", minimize)
-minimizeCorner.CornerRadius = UDim.new(0, 4)
+minimizeCorner.CornerRadius = UDim.new(0, 10)
 
 -- Content label
 local content = Instance.new("TextLabel")
