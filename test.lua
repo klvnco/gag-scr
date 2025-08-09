@@ -256,11 +256,11 @@ menu3.MouseButton1Click:Connect(function()
     -- Helper function to create button
     local function createButton(text, layoutOrder)
         local btn = Instance.new("TextButton")
-        btn.Size = UDim2.new(0.48, 0, 0, 30)
+        btn.Size = UDim2.new(0.48, 0, 0, 10)
         btn.BackgroundColor3 = Color3.fromRGB(70, 70, 200)
         btn.TextColor3 = Color3.fromRGB(255, 255, 255)
         btn.Font = Enum.Font.GothamSemibold
-        btn.TextSize = 14
+        btn.TextSize = 10
         btn.Text = text
         btn.LayoutOrder = layoutOrder
         return btn
@@ -306,7 +306,7 @@ menu3.MouseButton1Click:Connect(function()
     --local btnReLogin = createButton("Re-login", 1)
     --btnReLogin.Position = UDim2.new(0, 0, 0, 0)
     --btnReLogin.Parent = row3
--- Add this where you create buttons inside Menu 3, for example inside your layout setup:
+    -- Add this where you create buttons inside Menu 3, for example inside your layout setup:
 
     local TeleportService = game:GetService("TeleportService")
     local Players = game:GetService("Players")
