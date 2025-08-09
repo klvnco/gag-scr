@@ -151,7 +151,7 @@ rightContent.Parent = rightPanel
 -- Function to create menu buttons inside leftPanel
 local function createMenuButton(text, posY)
     local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(1, -10, 0, 40)
+    btn.Size = UDim2.new(1, -10, 0, 20)
     btn.Position = UDim2.new(0, 5, 0, posY)
     btn.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
     btn.TextColor3 = Color3.fromRGB(255, 255, 255)
