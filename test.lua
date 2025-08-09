@@ -1,16 +1,18 @@
+repeat task.wait() until game:IsLoaded() and game:GetService("Players") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.Character
+
 local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
 local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local HttpService = game:GetService("HttpService")
 
+local player = Players.LocalPlayer
 -- ====== File system and download setup ======
-
 if not isfolder("GagHub") then
     makefolder("GagHub")
 end
 if not isfolder("GagHub/Assets") then
     makefolder("GagHub/Assets")
 end
-
 local imageUrl = "https://raw.githubusercontent.com/klvnco/gag-scr/main/klvn-slvr.png"
 local imagePath = "GagHub/Assets/klvn-slvr.png"
 
@@ -28,12 +30,12 @@ if not isfile(imagePath) then
 end
 
 -- ====== Create GUI ======
-
 local gui = Instance.new("ScreenGui")
-gui.Name = "HelloWorldOverlay"
+gui.Name = "kid"
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 gui.ResetOnSpawn = false
 gui.IgnoreGuiInset = true
-gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+gui.Parent = player:WaitForChild("PlayerGui")
 
 pcall(function()
     gui.Parent = gethui and gethui() or (syn and syn.protect_gui and syn.protect_gui(gui)) or game:GetService("CoreGui")
