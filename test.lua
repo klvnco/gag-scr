@@ -182,3 +182,81 @@ restoreIcon.MouseButton1Click:Connect(function()
     main.Visible = true
     restoreIcon.Visible = false
 end)
+
+
+-- Left panel for menu (30% width)
+local leftPanel = Instance.new("Frame")
+leftPanel.Size = UDim2.new(0.3, 0, 1, 0)  -- 30% width, full height of main
+leftPanel.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+leftPanel.BorderSizePixel = 0
+leftPanel.Parent = main
+
+local leftCorner = Instance.new("UICorner", leftPanel)
+leftCorner.CornerRadius = UDim.new(0, 8)
+
+-- Right panel for content (70% width)
+local rightPanel = Instance.new("Frame")
+rightPanel.Size = UDim2.new(0.7, 0, 1, 0) -- 70% width, full height of main
+rightPanel.Position = UDim2.new(0.3, 0, 0, 0)
+rightPanel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+rightPanel.BorderSizePixel = 0
+rightPanel.Parent = main
+
+local rightCorner = Instance.new("UICorner", rightPanel)
+rightCorner.CornerRadius = UDim.new(0, 8)
+
+-- Create content label inside right panel
+local rightContent = Instance.new("TextLabel")
+rightContent.Size = UDim2.new(1, -20, 1, -20)
+rightContent.Position = UDim2.new(0, 10, 0, 10)
+rightContent.BackgroundTransparency = 1
+rightContent.TextColor3 = Color3.fromRGB(255, 255, 255)
+rightContent.TextWrapped = true
+rightContent.Font = Enum.Font.Gotham
+rightContent.TextSize = 14
+rightContent.Text = "Select a menu from the left"
+rightContent.Parent = rightPanel
+
+-- Helper function to create menu buttons
+local function createMenuButton(text, positionY)
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(1, -10, 0, 40)
+    button.Position = UDim2.new(0, 5, 0, positionY)
+    button.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.Font = Enum.Font.GothamSemibold
+    button.TextSize = 16
+    button.Text = text
+    button.Parent = leftPanel
+
+    local corner = Instance.new("UICorner", button)
+    corner.CornerRadius = UDim.new(0, 6)
+
+    button.MouseEnter:Connect(function()
+        button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+    end)
+
+    button.MouseLeave:Connect(function()
+        button.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+    end)
+
+    return button
+end
+
+-- Create 3 menu buttons
+local menu1 = createMenuButton("Menu 1", 10)
+local menu2 = createMenuButton("Menu 2", 60)
+local menu3 = createMenuButton("Menu 3", 110)
+
+-- Click handlers to update right panel content
+menu1.MouseButton1Click:Connect(function()
+    rightContent.Text = "Options for Menu 1:\n- Option A\n- Option B\n- Option C"
+end)
+
+menu2.MouseButton1Click:Connect(function()
+    rightContent.Text = "Options for Menu 2:\n- Setting 1\n- Setting 2\n- Setting 3"
+end)
+
+menu3.MouseButton1Click:Connect(function()
+    rightContent.Text = "Options for Menu 3:\n- Feature X\n- Feature Y\n- Feature Z"
+end)
