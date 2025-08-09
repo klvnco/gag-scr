@@ -44,7 +44,7 @@ end)
 
 -- Main window frame
 local main = Instance.new("Frame")
-main.Size = UDim2.new(0, 400, 0, 250)
+main.Size = UDim2.new(0, 400, 0, 300)
 main.Position = UDim2.new(0.5, -150, 0.5, -150)
 main.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 main.BorderSizePixel = 0
@@ -179,20 +179,42 @@ local menu1 = createMenuButton("Menu 1", 10)
 local menu2 = createMenuButton("Menu 2", 40)
 local menu3 = createMenuButton("Menu 3", 70)
 
--- Button click events to update right panel content
-menu1.MouseButton1Click:Connect(function()
-    rightContent.Text = "Options for Menu 1:\n- Option A\n- Option B\n- Option C"
-end)
+local function clearRightPanel()
+    for _, child in pairs(rightPanel:GetChildren()) do
+        if not child:IsA("UIListLayout") then
+            child:Destroy()
+        end
+    end
+end
 
-menu2.MouseButton1Click:Connect(function()
-    rightContent.Text = "Options for Menu 2:\n- Setting 1\n- Setting 2\n- Setting 3"
-end)
+local function showMenu1()
+    clearRightPanel()
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(1, -20, 1, -20)
+    textLabel.BackgroundTransparency = 1
+    textLabel.Text = "Options for Menu 1:\n- Option A\n- Option B\n- Option C"
+    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    textLabel.Font = Enum.Font.Gotham
+    textLabel.TextSize = 14
+    textLabel.TextWrapped = true
+    textLabel.Parent = rightPanel
+end
 
---menu3.MouseButton1Click:Connect(function()
---    rightContent.Text = "Options for Menu 3:\n- Feature X\n- Feature Y\n- Feature Z"
---end)
-menu3.MouseButton1Click:Connect(function()
-    -- Clear existing content
+local function showMenu2()
+    clearRightPanel()
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(1, -20, 1, -20)
+    textLabel.BackgroundTransparency = 1
+    textLabel.Text = "Options for Menu 2:\n- Setting 1\n- Setting 2\n- Setting 3"
+    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    textLabel.Font = Enum.Font.Gotham
+    textLabel.TextSize = 14
+    textLabel.TextWrapped = true
+    textLabel.Parent = rightPanel
+end
+
+local function showMenu3()
+    clearRightPanel()
     for _, child in pairs(rightPanel:GetChildren()) do
         if not child:IsA("UIListLayout") then
             child:Destroy()
@@ -330,7 +352,13 @@ menu3.MouseButton1Click:Connect(function()
     btnClearList.MouseButton1Click:Connect(function()
         print("Clear list clicked")
     end)
-end)
+end
+
+menu1.MouseButton1Click:Connect(showMenu1)
+menu2.MouseButton1Click:Connect(showMenu2)
+menu3.MouseButton1Click:Connect(showMenu3)
+
+
 
 
 -- Dragging variables for main window
