@@ -277,21 +277,21 @@ local function showMenu3()
     end
 
     -- Row 1: Label + Dropdown in same row
-    local row1 = createRow(40)
+    local row1 = createRow(30)
     row1.LayoutOrder = 1
     row1.Parent = rightPanel
 
     -- Add horizontal layout for this row
     local row1Layout = Instance.new("UIListLayout")
     row1Layout.FillDirection = Enum.FillDirection.Horizontal
-    row1Layout.Padding = UDim.new(0, 10)  -- Space between label and dropdown
+    row1Layout.Padding = UDim.new(0, 5)  -- Space between label and dropdown
     row1Layout.Parent = row1
 
     local row1Label = createLabel("Choose option:", 0.2)
     row1Label.Parent = row1
 
-    local row1Dropdown = createDropdown(0.7)
-    row1Dropdown.Parent = row1
+    --local row1Dropdown = createDropdown(0.7)
+   -- row1Dropdown.Parent = row1
 
     -- Row 2: Label + TextBox in same row
     local row2 = createRow(40)
