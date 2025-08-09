@@ -113,12 +113,21 @@ restoreIcon.Parent = gui
 local restoreCorner = Instance.new("UICorner", restoreIcon)
 restoreCorner.CornerRadius = UDim.new(1, 0)
 
+-- Add a subtle separator line
+local separator = Instance.new("Frame")
+separator.Size = UDim2.new(1, 0, 0, 1)
+separator.Position = UDim2.new(0, 0, 0, 40)
+separator.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+separator.BorderSizePixel = 0
+separator.Parent = main
+
 -- Left panel for menu (30% width)
 local leftPanel = Instance.new("Frame")
-leftPanel.Size = UDim2.new(0.20, 0, 1, -30)
+leftPanel.Position = UDim2.new(0, 0, 0, 35)  -- <-- add this line to move down by 30 px
+leftPanel.Size = UDim2.new(0.30, 0, 1, -35)
 leftPanel.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 leftPanel.BorderSizePixel = 0
-leftPanel.Position = UDim2.new(0, 0, 0, 30)  -- <-- add this line to move down by 30 px
+
 leftPanel.Parent = main
 
 
