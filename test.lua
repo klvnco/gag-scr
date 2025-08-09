@@ -213,7 +213,7 @@ menu3.MouseButton1Click:Connect(function()
         lbl.Text = text
         lbl.TextColor3 = Color3.fromRGB(255, 255, 255)
         lbl.Font = Enum.Font.GothamSemibold
-        lbl.TextSize = 14
+        lbl.TextSize = 10
         lbl.TextXAlignment = Enum.TextXAlignment.Left
         lbl.LayoutOrder = 1
         return lbl
@@ -226,7 +226,7 @@ menu3.MouseButton1Click:Connect(function()
         dropdown.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
         dropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
         dropdown.Font = Enum.Font.Gotham
-        dropdown.TextSize = 14
+        dropdown.TextSize = 10
         dropdown.Text = "Select an option ▼"
         dropdown.LayoutOrder = 2
         dropdown.AutoButtonColor = true
@@ -256,7 +256,7 @@ menu3.MouseButton1Click:Connect(function()
     -- Helper function to create button
     local function createButton(text, layoutOrder)
         local btn = Instance.new("TextButton")
-        btn.Size = UDim2.new(0.48, 0, 0, 10)
+        btn.Size = UDim2.new(0.48, 0, 0, 15)
         btn.BackgroundColor3 = Color3.fromRGB(70, 70, 200)
         btn.TextColor3 = Color3.fromRGB(255, 255, 255)
         btn.Font = Enum.Font.GothamSemibold
