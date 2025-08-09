@@ -6,6 +6,7 @@ local TweenService = game:GetService("TweenService")
 local HttpService = game:GetService("HttpService")
 
 local player = Players.LocalPlayer
+
 -- ====== File system and download setup ======
 if not isfolder("GagHub") then
     makefolder("GagHub")
@@ -44,7 +45,7 @@ end)
 -- Main window frame
 local main = Instance.new("Frame")
 main.Size = UDim2.new(0, 300, 0, 300)
-main.Position = UDim2.new(0.5, -150, 0.5, -80)
+main.Position = UDim2.new(0.5, -150, 0.5, -150)
 main.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 main.BorderSizePixel = 0
 main.Parent = gui
@@ -69,7 +70,7 @@ titleCorner.CornerRadius = UDim.new(0, 8)
 -- Close button
 local close = Instance.new("TextButton")
 close.Size = UDim2.new(0, 20, 0, 20)
-close.Position = UDim2.new(1, -28, 0, 3)
+close.Position = UDim2.new(1, -28, 0, 5)
 close.Text = "x"
 close.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
 close.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -87,7 +88,7 @@ end)
 -- Minimize button
 local minimize = Instance.new("TextButton")
 minimize.Size = UDim2.new(0, 20, 0, 20)
-minimize.Position = UDim2.new(1, -56, 0, 3)
+minimize.Position = UDim2.new(1, -56, 0, 5)
 minimize.Text = "-"
 minimize.BackgroundColor3 = Color3.fromRGB(80, 80, 200)
 minimize.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -97,17 +98,6 @@ minimize.Parent = title
 
 local minimizeCorner = Instance.new("UICorner", minimize)
 minimizeCorner.CornerRadius = UDim.new(0, 10)
-
--- Content label
-local content = Instance.new("TextLabel")
-content.Size = UDim2.new(1, -20, 1, -50)
-content.Position = UDim2.new(0, 10, 0, 40)
-content.BackgroundTransparency = 1
-content.Text = "Hello, World!"
-content.TextColor3 = Color3.fromRGB(255, 255, 255)
-content.TextScaled = true
-content.Font = Enum.Font.Gotham
-content.Parent = main
 
 -- Restore icon (starts hidden)
 local restoreIcon = Instance.new("ImageButton")
@@ -120,6 +110,83 @@ restoreIcon.Parent = gui
 
 local restoreCorner = Instance.new("UICorner", restoreIcon)
 restoreCorner.CornerRadius = UDim.new(1, 0)
+
+-- Left panel for menu (30% width)
+local leftPanel = Instance.new("Frame")
+leftPanel.Size = UDim2.new(0.3, 0, 1, 0)
+leftPanel.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+leftPanel.BorderSizePixel = 0
+leftPanel.Parent = main
+
+local leftCorner = Instance.new("UICorner", leftPanel)
+leftCorner.CornerRadius = UDim.new(0, 8)
+
+-- Right panel for content (70% width)
+local rightPanel = Instance.new("Frame")
+rightPanel.Size = UDim2.new(0.7, 0, 1, 0)
+rightPanel.Position = UDim2.new(0.3, 0, 0, 0)
+rightPanel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+rightPanel.BorderSizePixel = 0
+rightPanel.Parent = main
+
+local rightCorner = Instance.new("UICorner", rightPanel)
+rightCorner.CornerRadius = UDim.new(0, 8)
+
+-- Content label inside right panel
+local rightContent = Instance.new("TextLabel")
+rightContent.Size = UDim2.new(1, -20, 1, -20)
+rightContent.Position = UDim2.new(0, 10, 0, 10)
+rightContent.BackgroundTransparency = 1
+rightContent.TextColor3 = Color3.fromRGB(255, 255, 255)
+rightContent.TextWrapped = true
+rightContent.Font = Enum.Font.Gotham
+rightContent.TextSize = 14
+rightContent.Text = "Select a menu from the left"
+rightContent.Parent = rightPanel
+
+-- Function to create menu buttons inside leftPanel
+local function createMenuButton(text, posY)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1, -10, 0, 40)
+    btn.Position = UDim2.new(0, 5, 0, posY)
+    btn.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Font = Enum.Font.GothamSemibold
+    btn.TextSize = 16
+    btn.Text = text
+    btn.Parent = leftPanel
+
+    local corner = Instance.new("UICorner", btn)
+    corner.CornerRadius = UDim.new(0, 6)
+
+    btn.MouseEnter:Connect(function()
+        btn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+    end)
+
+    btn.MouseLeave:Connect(function()
+        btn.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+    end)
+
+    return btn
+end
+
+-- Create 3 menu buttons
+local menu1 = createMenuButton("Menu 1", 10)
+local menu2 = createMenuButton("Menu 2", 60)
+local menu3 = createMenuButton("Menu 3", 110)
+
+-- Button click events to update right panel content
+menu1.MouseButton1Click:Connect(function()
+    rightContent.Text = "Options for Menu 1:\n- Option A\n- Option B\n- Option C"
+end)
+
+menu2.MouseButton1Click:Connect(function()
+    rightContent.Text = "Options for Menu 2:\n- Setting 1\n- Setting 2\n- Setting 3"
+end)
+
+menu3.MouseButton1Click:Connect(function()
+    rightContent.Text = "Options for Menu 3:\n- Feature X\n- Feature Y\n- Feature Z"
+end)
 
 -- Dragging variables for main window
 local dragging, dragStart, startPos
@@ -181,82 +248,4 @@ end)
 restoreIcon.MouseButton1Click:Connect(function()
     main.Visible = true
     restoreIcon.Visible = false
-end)
-
-
--- Left panel for menu (30% width)
-local leftPanel = Instance.new("Frame")
-leftPanel.Size = UDim2.new(0.3, 0, 1, 0)  -- 30% width, full height of main
-leftPanel.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-leftPanel.BorderSizePixel = 0
-leftPanel.Parent = main
-
-local leftCorner = Instance.new("UICorner", leftPanel)
-leftCorner.CornerRadius = UDim.new(0, 8)
-
--- Right panel for content (70% width)
-local rightPanel = Instance.new("Frame")
-rightPanel.Size = UDim2.new(0.7, 0, 1, 0) -- 70% width, full height of main
-rightPanel.Position = UDim2.new(0.3, 0, 0, 0)
-rightPanel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-rightPanel.BorderSizePixel = 0
-rightPanel.Parent = main
-
-local rightCorner = Instance.new("UICorner", rightPanel)
-rightCorner.CornerRadius = UDim.new(0, 8)
-
--- Create content label inside right panel
-local rightContent = Instance.new("TextLabel")
-rightContent.Size = UDim2.new(1, -20, 1, -20)
-rightContent.Position = UDim2.new(0, 10, 0, 10)
-rightContent.BackgroundTransparency = 1
-rightContent.TextColor3 = Color3.fromRGB(255, 255, 255)
-rightContent.TextWrapped = true
-rightContent.Font = Enum.Font.Gotham
-rightContent.TextSize = 14
-rightContent.Text = "Select a menu from the left"
-rightContent.Parent = rightPanel
-
--- Helper function to create menu buttons
-local function createMenuButton(text, positionY)
-    local button = Instance.new("TextButton")
-    button.Size = UDim2.new(1, -10, 0, 40)
-    button.Position = UDim2.new(0, 5, 0, positionY)
-    button.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
-    button.TextColor3 = Color3.fromRGB(255, 255, 255)
-    button.Font = Enum.Font.GothamSemibold
-    button.TextSize = 16
-    button.Text = text
-    button.Parent = leftPanel
-
-    local corner = Instance.new("UICorner", button)
-    corner.CornerRadius = UDim.new(0, 6)
-
-    button.MouseEnter:Connect(function()
-        button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-    end)
-
-    button.MouseLeave:Connect(function()
-        button.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
-    end)
-
-    return button
-end
-
--- Create 3 menu buttons
-local menu1 = createMenuButton("Menu 1", 10)
-local menu2 = createMenuButton("Menu 2", 60)
-local menu3 = createMenuButton("Menu 3", 110)
-
--- Click handlers to update right panel content
-menu1.MouseButton1Click:Connect(function()
-    rightContent.Text = "Options for Menu 1:\n- Option A\n- Option B\n- Option C"
-end)
-
-menu2.MouseButton1Click:Connect(function()
-    rightContent.Text = "Options for Menu 2:\n- Setting 1\n- Setting 2\n- Setting 3"
-end)
-
-menu3.MouseButton1Click:Connect(function()
-    rightContent.Text = "Options for Menu 3:\n- Feature X\n- Feature Y\n- Feature Z"
 end)
