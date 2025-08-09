@@ -212,15 +212,71 @@ end
 
 local function showMenu2()
     clearRightPanel()
-    local textLabel = Instance.new("TextLabel")
-    textLabel.Size = UDim2.new(1, -20, 1, -20)
-    textLabel.BackgroundTransparency = 1
-    textLabel.Text = "Options for Menu 2:\n- Setting 1\n- Setting 2\n- Setting 3"
-    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    textLabel.Font = Enum.Font.Gotham
-    textLabel.TextSize = 14
-    textLabel.TextWrapped = true
-    textLabel.Parent = rightPanel
+    -- Add a UIListLayout to arrange rows vertically
+    local listLayout = Instance.new("UIListLayout")
+    listLayout.Padding = UDim.new(0, 10)  -- spacing between rows
+    listLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    listLayout.Parent = rightPanel
+    -- Helper function to create label (modified for inline)
+    local function createLabel(text, widthPercent)
+        local lbl = Instance.new("TextLabel")
+        lbl.Size = UDim2.new(widthPercent, -5, 0, 35)  -- Default to 30% width with 5px margin
+        lbl.BackgroundTransparency = 1
+        lbl.Text = text
+        lbl.TextColor3 = Color3.fromRGB(255, 255, 255)
+        lbl.Font = Enum.Font.GothamSemibold
+        lbl.TextSize = 10
+        lbl.TextXAlignment = Enum.TextXAlignment.Left
+        return lbl
+    end
+    -- Helper function to create dropdown (modified for inline)
+    local function createDropdown(widthPercent)
+        local dropdown = Instance.new("TextButton")
+        dropdown.Size = UDim2.new(widthPercent, -5, 0, 35)  -- Default to 70% width with 5px margin
+        dropdown.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+        dropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
+        dropdown.Font = Enum.Font.Gotham
+        dropdown.TextSize = 10
+        dropdown.Text = "Select an option ▼"
+        dropdown.AutoButtonColor = true
+
+        dropdown.MouseButton1Click:Connect(function()
+            print("Dropdown clicked!")
+        end)
+
+        return dropdown
+    end
+    -- Helper function to create row container
+    local function createRow(height)
+        local row = Instance.new("Frame")
+        row.Size = UDim2.new(1, -10, 0, height)  -- 10px side padding
+        row.BackgroundTransparency = 1
+        return row
+    end
+     -- Row 1: Label + Dropdown in same row
+    local row1 = createRow(30)
+    row1.LayoutOrder = 1
+    row1.Parent = rightPanel
+
+    -- Add horizontal layout for this row
+    local row1Layout = Instance.new("UIListLayout")
+    row1Layout.FillDirection = Enum.FillDirection.Horizontal
+    row1Layout.Padding = UDim.new(0, 5)  -- Space between label and dropdown
+    row1Layout.Parent = row1
+
+    local row1Label = createLabel("Pets:", 0.2)
+    row1Label.Parent = row1
+        -- Add some toggle options
+    -- Add toggle buttons below row1 (directly under rightPanel, vertically stacked by UIListLayout)
+    local option1 = createToggleButton(rightPanel, "Enable Feature A", false, function(state)
+        print("Feature A is now", state and "enabled" or "disabled")
+    end)
+    option1.frame.LayoutOrder = 2
+
+    local option2 = createToggleButton(rightPanel, "Enable Feature B", true, function(state)
+        print("Feature B is now", state and "enabled" or "disabled")
+    end)
+    option2.frame.LayoutOrder = 3
 end
 
 local function showMenu3()
@@ -287,10 +343,10 @@ local function showMenu3()
     row1Layout.Padding = UDim.new(0, 5)  -- Space between label and dropdown
     row1Layout.Parent = row1
 
-    local row1Label = createLabel("Choose option:", 0.2)
+    local row1Label = createLabel("choose pet:", 0.2)
     row1Label.Parent = row1
 
-    local row1Dropdown = createDropdown(0.7)
+    local row1Dropdown = createDropdown(0.4)
     row1Dropdown.Parent = row1
 
     -- Row 2: Label + TextBox in same row
@@ -354,7 +410,96 @@ menu1.MouseButton1Click:Connect(showMenu1)
 menu2.MouseButton1Click:Connect(showMenu2)
 menu3.MouseButton1Click:Connect(showMenu3)
 
+local function createToggleButton(parent, text, defaultState, callback)
+    -- Create container frame
+    local toggleFrame = Instance.new("Frame")
+    toggleFrame.Size = UDim2.new(1, -10, 0, 25)
+    toggleFrame.BackgroundTransparency = 1
+    toggleFrame.Parent = parent
 
+    -- Create label
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(0.7, 0, 1, 0)
+    label.BackgroundTransparency = 1
+    label.Text = text
+    label.TextColor3 = Color3.fromRGB(255, 255, 255)
+    label.Font = Enum.Font.Gotham
+    label.TextSize = 12
+    label.TextXAlignment = Enum.TextXAlignment.Left
+    label.Parent = toggleFrame
+
+    -- Create toggle button
+    local toggleButton = Instance.new("TextButton")
+    toggleButton.Size = UDim2.new(0.25, 0, 0.8, 0)
+    toggleButton.Position = UDim2.new(0.75, 0, 0.1, 0)
+    toggleButton.Text = ""
+    toggleButton.AutoButtonColor = false
+    toggleButton.Parent = toggleFrame
+
+    -- Create toggle background
+    local toggleBg = Instance.new("Frame")
+    toggleBg.Size = UDim2.new(1, 0, 1, 0)
+    toggleBg.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+    toggleBg.Parent = toggleButton
+
+    -- Create toggle indicator
+    local toggleIndicator = Instance.new("Frame")
+    toggleIndicator.Size = UDim2.new(0.5, 0, 1, -4)
+    toggleIndicator.Position = defaultState and UDim2.new(0.5, 2, 0, 2) or UDim2.new(0, 2, 0, 2)
+    toggleIndicator.BackgroundColor3 = defaultState and Color3.fromRGB(100, 200, 100) or Color3.fromRGB(200, 100, 100)
+    toggleIndicator.Parent = toggleBg
+
+    -- Add corners for aesthetics
+    local bgCorner = Instance.new("UICorner", toggleBg)
+    bgCorner.CornerRadius = UDim.new(0.5, 0)
+    local indicatorCorner = Instance.new("UICorner", toggleIndicator)
+    indicatorCorner.CornerRadius = UDim.new(0.5, 0)
+
+    -- Current state
+    local state = defaultState or false
+
+    -- Toggle functionality
+    toggleButton.MouseButton1Click:Connect(function()
+        state = not state
+        if state then
+            toggleIndicator:TweenPosition(UDim2.new(0.5, 2, 0, 2), "Out", "Quad", 0.2)
+            toggleIndicator.BackgroundColor3 = Color3.fromRGB(100, 200, 100)
+        else
+            toggleIndicator:TweenPosition(UDim2.new(0, 2, 0, 2), "Out", "Quad", 0.2)
+            toggleIndicator.BackgroundColor3 = Color3.fromRGB(200, 100, 100)
+        end
+        if callback then callback(state) end
+    end)
+
+    -- Touch support
+    toggleButton.TouchTap:Connect(function()
+        state = not state
+        if state then
+            toggleIndicator:TweenPosition(UDim2.new(0.5, 2, 0, 2), "Out", "Quad", 0.2)
+            toggleIndicator.BackgroundColor3 = Color3.fromRGB(100, 200, 100)
+        else
+            toggleIndicator:TweenPosition(UDim2.new(0, 2, 0, 2), "Out", "Quad", 0.2)
+            toggleIndicator.BackgroundColor3 = Color3.fromRGB(200, 100, 100)
+        end
+        if callback then callback(state) end
+    end)
+
+    return {
+        frame = toggleFrame,
+        button = toggleButton,
+        getState = function() return state end,
+        setState = function(newState)
+            state = newState
+            if state then
+                toggleIndicator.Position = UDim2.new(0.5, 2, 0, 2)
+                toggleIndicator.BackgroundColor3 = Color3.fromRGB(100, 200, 100)
+            else
+                toggleIndicator.Position = UDim2.new(0, 2, 0, 2)
+                toggleIndicator.BackgroundColor3 = Color3.fromRGB(200, 100, 100)
+            end
+        end
+    }
+end
 
 
 -- Dragging variables for main window
