@@ -188,8 +188,32 @@ menu2.MouseButton1Click:Connect(function()
     rightContent.Text = "Options for Menu 2:\n- Setting 1\n- Setting 2\n- Setting 3"
 end)
 
+--menu3.MouseButton1Click:Connect(function()
+--    rightContent.Text = "Options for Menu 3:\n- Feature X\n- Feature Y\n- Feature Z"
+--end)
 menu3.MouseButton1Click:Connect(function()
-    rightContent.Text = "Options for Menu 3:\n- Feature X\n- Feature Y\n- Feature Z"
+    -- Clear existing content in right panel first:
+    for _, child in pairs(rightPanel:GetChildren()) do
+        if not child:IsA("UIListLayout") then  -- just in case you add layouts later
+            child:Destroy()
+        end
+    end
+
+    -- Create a button inside the right panel
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(0, 150, 0, 40)
+    btn.Position = UDim2.new(0, 10, 0, 10)
+    btn.BackgroundColor3 = Color3.fromRGB(70, 70, 200)
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Font = Enum.Font.GothamSemibold
+    btn.TextSize = 16
+    btn.Text = "Right Panel Button"
+    btn.Parent = rightPanel
+
+    btn.MouseButton1Click:Connect(function()
+        print("Right Panel Button clicked!")
+        -- Add button action here
+    end)
 end)
 
 -- Dragging variables for main window
